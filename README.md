@@ -1,2 +1,2 @@
-# C-Project
+# CppProject
 learning C++
