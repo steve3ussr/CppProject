@@ -351,6 +351,6 @@ struct tm {
 cin >> var;
 cout << var << endl;
 // cerr 非缓冲！
-// clog huan'chong
+// clog 缓冲！
 ```
 
