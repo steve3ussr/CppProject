@@ -1,11 +1,21 @@
-#include <stdio.h>
+#include <bits/stdc++.h>
+
+void add1(int & ele) {
+    ele += 1;
+}
+
+const int MAX = 6;
 
 int main() {
-    int a = 114514;
-    int& b = a;
-    int c = b;
-    c -= 100;
-    b -= 131345;
-    printf("a=%d, b=%d, c=%d\n", a, b, c);
+    int vec[MAX] = {1, 1, 4, 5, 1, 4};
+    printf("%d\n", vec[0]);
+    int (&r)[MAX] = vec;
+    
+    for(int i=0;i<6;i++)
+    {
+        add1(r[i]);
+        printf("%d\n", vec[i]);
+    }
+    
     return 0;
 }

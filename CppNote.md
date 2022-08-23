@@ -1,9 +1,9 @@
-# Cpp TODO
+# C++ TODO
 
 - enum
 - 
 
-# Cpp Hello World
+# C++ Hello World
 
 ``` c++
 #include <iostream>
@@ -24,13 +24,13 @@ int main()
 >
 > - 真正的开发过程中， 尽量避免使用 **using namespace std;** 等直接引入整个命名空间，否则会因为命名空间污染导致很多不必要的问题， 比如自己写的某个函数，名称正好和 **std** 中的一样， 编译器会不知道使用哪一个， 引起编译报错， 建议使用: `std::cout`
 >
-> - **.cpp** 文件和 **.h** 文件的区别：
+> - **.C++** 文件和 **.h** 文件的区别：
 >
->   cpp文件用于存放类的定义 definition，h 文件用于存放类的声明 declaration。
+>   C++文件用于存放类的定义 definition，h 文件用于存放类的声明 declaration。
 >
->   在头文件中声明了一个函数或者类，需要定义或者使用这个函数或者类时，需要在 cpp 文件中 include 这个头文件
+>   在头文件中声明了一个函数或者类，需要定义或者使用这个函数或者类时，需要在 C++ 文件中 include 这个头文件
 
-# Cpp 数据类型, typedef, enum
+# C++ 数据类型, typedef, enum
 
 > `sizeof(type), numeric_limits<type>::max/min`可获取下面的值
 
@@ -65,7 +65,7 @@ int main()
 
 
 
-# Cpp 常量
+# C++ 常量
 
 字符串分行：
 
@@ -78,7 +78,7 @@ string a = "htrg \
 >
 > C的字符串：char *a = "e2131e"
 
-# Cpp 函数，lambda
+# C++ 函数，lambda
 
 ## Call Method
 
@@ -156,7 +156,7 @@ int main() {
 
 
 
-# Cpp数字，随机数，数学运算
+# C++数字，随机数，数学运算
 
 ## 数学计算
 
@@ -186,7 +186,7 @@ int main() {
 
 
 
-# Cpp 数组
+# C++ 数组
 
 声明：`type NAME[size];`
 
@@ -258,7 +258,7 @@ int main() {
 
 **C++ 不支持在函数外返回局部变量的地址，除非定义局部变量为 static 变量，因为return后释放栈上空间了。**
 
-# Cpp 字符串
+# C++ 字符串
 
 > `\0`为终止符，NULL
 
@@ -291,7 +291,7 @@ string类提供了一系列针对字符串的操作，比如：
 5. replace() -- 替换字符串
 6. substr() -- 返回某个子字符串
 
-# Cpp 引用
+# C++ 引用
 
 > 变量的别名
 >
@@ -319,7 +319,38 @@ string类提供了一系列针对字符串的操作，比如：
 
 
 
+# C/C++ DATE, TIME
 
+`#include <ctime>`
 
+有四个与时间相关的类型：**clock_t、time_t、size_t** 和 **tm**。类型 clock_t、size_t 和 time_t 能够把系统时间和日期表示为某种整数。
 
+``` c++
+struct tm {
+  int tm_sec;   // 秒，正常范围从 0 到 59，但允许至 61
+  int tm_min;   // 分，范围从 0 到 59
+  int tm_hour;  // 小时，范围从 0 到 23
+  int tm_mday;  // 一月中的第几天，范围从 1 到 31
+  int tm_mon;   // 月，范围从 0 到 11
+  int tm_year;  // 自 1900 年起的年数
+  int tm_wday;  // 一周中的第几天，范围从 0 到 6，从星期日算起
+  int tm_yday;  // 一年中的第几天，范围从 0 到 365，从 1 月 1 日算起
+  int tm_isdst; // 夏令时
+};
+```
+
+# C++ IO
+
+| 头文件     | 函数和描述                                                   |
+| :--------- | :----------------------------------------------------------- |
+| <iostream> | 该文件定义了 **cin、cout、cerr** 和 **clog** 对象，分别对应于标准输入流、标准输出流、非缓冲标准错误流和缓冲标准错误流。 |
+| <iomanip>  | 该文件通过所谓的参数化的流操纵器（比如 **setw** 和 **setprecision**），来声明对执行标准化 I/O 有用的服务。 |
+| <fstream>  | 该文件为用户控制的文件处理声明服务。我们将在文件和流的相关章节讨论它的细节 |
+
+``` C++
+cin >> var;
+cout << var << endl;
+// cerr 非缓冲！
+// clog huan'chong
+```
 
