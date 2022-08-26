@@ -1,7 +1,7 @@
 # C++ TODO
 
 - [ ] virtual inherit
-- [ ] 
+- [ ] copy constructor
 
 # C++ Hello World
 
@@ -571,13 +571,21 @@ cout << var << endl;
 
 变量的话直接用`.`就行。
 
+类内可以直接相互访问，不用非得`this->`
+
+## 成员函数
+
+如果在类内部定义了，那就默认是`inline`的，即使没加标识符。
+
+不管什么访问权限，都可以在类外定义。
+
 ## 访问修饰符，继承
 
 ### public
 
 **公有**成员在程序中类的外部是可访问的。您可以不使用任何成员函数来设置和获取公有变量的值
 
-### private(DEFAULT TYPE)
+### private(DEFAULT  TYPE)
 
 **私有**成员**变量或函数**在类的外部是不可访问的，甚至是不可查看的。只有类和友元函数可以访问私有成员。
 
@@ -591,9 +599,79 @@ cout << var << endl;
 
 > 见 C++ 继承
 
-## 构造函数，析构函数
+## 构造函数，析构函数，拷贝构造
 
+### Constructor
 
+> 和`__init__.py`一样
+
+类的**构造函数**是类的一种特殊的成员函数，它会在每次创建类的新对象时执行。
+
+构造函数的名称与类的名称是完全相同的，并且不会返回任何类型，也不会返回 void。构造函数可用于为某些成员变量设置初始值。
+
+> 构造函数可以写成private，此时将出现[单例模式](https://blog.csdn.net/weixin_43778179/article/details/105073150)：
+>
+> 如果构造函数和拷贝构造函数都是private，则将只会出现一个该类的实例
+
+``` C++
+class Name {
+    public:
+    	Name() {}; // this is constructor
+};
+```
+
+利用这点可以初始化：
+
+```c++
+class Name {
+    public:
+    	int score;
+    	int age;
+    	int salary;
+    	Name(int, int, int);
+}
+Name::Name(int a, int b, int c) {
+    score = a;
+    age = b;
+    salary = c;
+}
+
+int main() {
+  Name inst = Name(100, 18, 10000);  
+};
+```
+
+但是这样写构造函数可能有点麻烦，所以**可以用初始化列表**：
+``` c++
+Name::Name(int a, int b, int c): score(a), age(b), salary(c) {};
+```
+
+### Destroyer
+
+构造函数可以有多个，但是析构函数只能有一个，**而且不能带参数**：用于删除对象时/跳出程序时前释放资源。
+
+``` c++
+class Name {
+    public:
+    	~Name(){...;}; // destroyer
+}
+```
+
+### Copy Constructor
+
+**拷贝构造函数**是一种特殊的构造函数，它在创建对象时，是使用同一类中之前创建的对象来初始化新创建的对象。拷贝构造函数通常用于：
+
+- 通过使用另一个同类型的对象来初始化新创建的对象。
+- 复制对象把它作为参数传递给函数。
+- 复制对象，并从函数返回这个对象。
+
+如果在类中没有定义拷贝构造函数，编译器会自行定义一个。**如果类带有指针变量，并有动态内存分配，则它必须有一个拷贝构造函数。**拷贝构造函数的最常见形式如下：
+
+``` c++
+className(const className *obj){ // obj: a object being copied
+    // something
+}
+```
 
 
 
