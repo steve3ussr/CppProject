@@ -163,7 +163,13 @@ string a = "htrg \
 >
 > C的字符串：char *a = "e2131e"
 
-# C++ 存储类
+C-Style String: `char str = "S"`，实际上试图让`str`成为`“S\0”`这个字符串的指针，而这将导致编译器不通过。
+
+
+
+# C++ 存储
+
+类
 
 > - auto
 > - extern
@@ -453,7 +459,7 @@ int main() {
 
 `char name[7] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', '\0'};`
 
-`char name[] = "abcdefg";`
+`char name[] = "abcdefg";`，此处编译器将自动判断长度
 
 以上两种都很C。
 
