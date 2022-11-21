@@ -569,7 +569,7 @@ cout << var << endl;
 
 访问成员变量或函数：`.`
 
-一般是在类内声明方法，但是在类外定义方法。此时需要使用`::`(**范围解析运算符**)，如：
+**一般是在类内声明方法，但是在类外定义方法**。此时需要使用`::`(**范围解析运算符**)，如：
 
 `void className::methodName(void) {};`
 
@@ -579,11 +579,17 @@ cout << var << endl;
 
 类内可以直接相互访问，不用非得`this->`
 
+> 各种成员函数吗，不管是公有私有，还是普通成员或构造析构，都可以类内声明，类外定义：
+>
+> 原则是将**实现细节从接口设计中分离出来**。如果以后找到了更好的、实现数据表示或成员函数细节的方法，可以**对这些细节进行修改，而无需修改程序接口**这使程序维护起来更容易
+
 ## 成员函数
 
-如果在类内部定义了，那就默认是`inline`的，即使没加标识符。
+如果在类内部定义了，那就默认是`inline`的，即使没加标识符。如果`inline`的话，最好是在头文件里直接写出来。
 
-不管什么访问权限，都可以在类外定义。
+**不管什么访问权限，都可以在类外定义。**
+
+类方法只有一个内存，所有对象共享一个类方法。
 
 ## 访问修饰符，继承
 
@@ -611,7 +617,7 @@ cout << var << endl;
 
 > 和`__init__.py`一样
 
-类的**构造函数**是类的一种特殊的成员函数，它会在每次创建类的新对象时执行。
+类的**构造函数**是类的一种特殊的成员函数，它会在每次创建类的新对象时执行(当然也可用于重新赋值)。
 
 构造函数的名称与类的名称是完全相同的，并且不会返回任何类型，也不会返回 void。构造函数可用于为某些成员变量设置初始值。
 
@@ -647,12 +653,69 @@ int main() {
 };
 ```
 
-但是这样写构造函数可能有点麻烦，所以**可以用初始化列表**：
+**ATTENTION! 构造函数的参数不能和成员变量重名!**两种解决方案：
+
+1. 类声明中变量加上`m_`前缀表示是member；
+2. 类声明中变量加上`_`后缀；
+
+
+
+但是这样定义构造函数可能有点麻烦，所以**可以用初始化列表**：
+
 ``` c++
 Name::Name(int a, int b, int c): score(a), age(b), salary(c) {};
 ```
 
-### Destroyer
+在调用构造函数时有两种方式：
+
+1. `Student inst = Student(...)`
+2. `Student inst(...)`更紧凑
+
+---
+
+通常还需要给构造函数加上默认值，比如我不想直接在生成对象时输入所有的值：
+
+1. 在定义构造函数时，参数可加上默认值；
+2. 因为函数签名是由函数名、形参组成的嘛！所以可以定义一个正常的构造函数（不带默认值），再定义一个无形参但是定义里默认赋值的构造函数，如下所示：
+
+```c++
+/*
+
+class Student 
+{
+    public:
+        Student(std::string, int, int);
+        Student();
+};
+
+*/
+
+Student::Student(std::string str, int math, int eng)
+{
+    score_eng = eng;
+    score_math = math;
+    name = str;
+}
+
+Student::Student()
+{
+    score_eng = 0;
+    score_math = 0;
+    name = "NULL";
+}
+
+int main()
+{
+    Student colin("Colin McRae", 97, 66);
+    Student mary;
+    colin = Student("CoLin McRae", 66, 97);  //会创建一个临时对象
+    return 0;
+}
+```
+
+
+
+### Destructor
 
 构造函数可以有多个，但是析构函数只能有一个，**而且不能带参数**：用于删除对象时/跳出程序时前释放资源。
 
@@ -662,6 +725,10 @@ class Name {
     	~Name(){...;}; // destroyer
 }
 ```
+
+普通场景下，构造函数和析构函数都是public，但也有特殊情况：[Constructor/Destructor 设置成protected / private的原因](https://blog.csdn.net/fly542/article/details/8055207)
+
+
 
 ### Copy Constructor
 
@@ -691,7 +758,7 @@ class A{};
 class B{};
 class C{};
 
-class Z: public A, private B, proteced C{};
+class Z: public A, private B, protected C{};
 ```
 
 有public, protected, private三种继承方式，它们相应地改变了基类成员的访问属性。
